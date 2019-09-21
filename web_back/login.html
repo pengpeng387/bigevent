@@ -39,7 +39,7 @@
                     <h4 class="modal-title">系统提示</h4>
                 </div>
                 <div class="modal-body">
-                    <p>用户名或密码错误&hellip;</p>
+                    <p id="model_font">&hellip;</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -49,20 +49,26 @@
     </div><!-- /.modal -->
     <script src="./js/lib/jquery-1.12.4.min.js"></script>
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/utils/config.js"></script>
+    <script src="./js/utils/user.js"></script>
     <script>
         $("#login_btn").click(function () {
             var userName = $("#userName").val();
             var password = $("#password").val();
-            $.ajax({
-                type: "post",
-                url: "http://localhost:8000/admin/login",
-                data: { 'user_name': userName, 'password': password },
-                success: function (res) {
-                    if (res.code === 200) {  
-                        window.location.href = "./index.html";
-                    }else{
-                        $('#myModal').modal('show');
-                    }
+            //判断
+            if (userName === "" || password === "") {
+                $("#model_font").text("用户名或密码不能为空");
+                $('#myModal').modal('show');
+                return;
+            }
+
+            //用户登陆
+            user.User_Login(userName, password, function (res) {
+                if (res.code == 200) {
+                    window.location.href = "./index.html";
+                } else {
+                    $("#model_font").text("用户名或密码错误");
+                    $('#myModal').modal('show');
                 }
             });
         });
