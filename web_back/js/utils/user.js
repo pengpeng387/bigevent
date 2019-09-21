@@ -14,6 +14,15 @@ var user = {
                 fn(res);
             }
         });
+    },
+    User_Out:function(fn){
+        $.ajax({
+            type: "post",
+            url: URL.User_Out,
+            success:function(res){
+                fn(res);
+            }
+        });
     }
 }
 
