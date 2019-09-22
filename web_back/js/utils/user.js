@@ -1,3 +1,5 @@
+
+// 用户功能
 var user = {
     /**
      * 用户名登陆
@@ -5,7 +7,7 @@ var user = {
      * @param {*} password //密码
      * @param {*} fn //回调函数
      */
-    User_Login: function (userName,password,fn) {
+    User_Login: function (userName, password, fn) {
         $.ajax({
             type: "post",
             url: URL.User_Login,
@@ -15,14 +17,32 @@ var user = {
             }
         });
     },
-    User_Out:function(fn){
+    /**
+     * 用户退出功能
+     * @param {*} fn//回调函数 
+     */
+    User_Out: function (fn) {
         $.ajax({
             type: "post",
             url: URL.User_Out,
-            success:function(res){
+            success: function (res) {
+                fn(res);
+            }
+        });
+    },
+    /**
+     * 获取用户信息
+     * @param {*} fn //回调函数
+     */
+    User_getUser: function (fn) {
+        $.ajax({
+            type: "get",
+            url: URL.User_getUser,
+            success: function (res) {
                 fn(res);
             }
         });
     }
+
 }
 
